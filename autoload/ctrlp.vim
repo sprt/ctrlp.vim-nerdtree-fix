@@ -1977,10 +1977,9 @@ fu! s:bufnrfilpath(line)
 endf
 
 fu! ctrlp#normcmd(cmd, ...)
-	let buftypes = [ 'quickfix', 'help' ]
 	if a:0 < 2 && s:nosplit() | retu a:cmd | en
 	let norwins = filter(range(1, winnr('$')),
-		\ 'index(buftypes, getbufvar(winbufnr(v:val), "&bt")) == -1 || s:isneovimterminal(winbufnr(v:val))')
+		\ 'empty(getbufvar(winbufnr(v:val), "&bt")) || s:isneovimterminal(winbufnr(v:val))')
 	for each in norwins
 		let bufnr = winbufnr(each)
 		if empty(bufname(bufnr)) && empty(getbufvar(bufnr, '&ft'))
